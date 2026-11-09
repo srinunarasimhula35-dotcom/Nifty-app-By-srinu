@@ -1,14 +1,12 @@
 import streamlit as st
 import pandas as pd
 
-# 1. Page Setup
 st.set_page_config(page_title="Ultimate F&O Business Dashboard", layout="wide")
 st.title("📊 Ultimate F&O Trading Decision Engine")
 st.write("**Founder:** Tallapalli Venkata Prasad | **Goal:** ₹10,000 Daily Income Business")
 
 st.markdown("---")
 
-# 2. Sidebar Configuration
 st.sidebar.header("🛠️ Risk Management Settings")
 capital = st.sidebar.number_input("Trading Capital (₹)", value=250000, step=10000)
 daily_target = st.sidebar.number_input("Daily Profit Target (₹)", value=10000)
@@ -30,12 +28,10 @@ trade_type = st.sidebar.selectbox("Trade Type", ["Call Option (CE)", "Put Option
 premium_paid = st.sidebar.number_input("Option Premium Price (₹)", value=150)
 lots = st.sidebar.number_input("Number of Lots (1 Lot = 65 Qty)", value=5, step=1)
 
-# 3. Calculations
 LOT_SIZE = 65
 total_qty = lots * LOT_SIZE
 total_risk_capital = premium_paid * total_qty
 
-# 4. Prediction Logic
 bullish_points = 0
 bearish_points = 0
 
@@ -68,7 +64,6 @@ else:
     trade_advice = "🛡️ NO-TRADE ZONE: Signals are clashing. Protect your capital."
     advice_color = "warning"
 
-# Display Predictions
 p_col1, p_col2, p_col3 = st.columns(3)
 with p_col1: st.metric(label="Estimated Next 5-Min Candle", value=next_candle_estimate)
 with p_col2: st.metric(label="Green Candle Probability (%)", value=f"{green_probability}%")
@@ -80,7 +75,6 @@ else: st.warning(trade_advice)
 
 st.markdown("---")
 
-# 5. Core Business Metrics Layout
 col1, col2, col3 = st.columns(3)
 with col1: st.metric(label="Total Premium Invested", value=f"₹{total_risk_capital:,.2f}")
 with col2:
@@ -88,7 +82,6 @@ with col2:
     else: st.success("✅ Position Sizing Within Safe Limits")
 with col3: st.info(f"Target: +₹{daily_target} | StopLoss: -₹{daily_stoploss}")
 
-# 6. Chart Visualizer using Native Streamlit Charts
 st.subheader("🎯 Expected Business Profit / Loss Simulation Chart")
 price_range = list(range(int(nifty_spot * 0.98), int(nifty_spot * 1.02), 20))
 
